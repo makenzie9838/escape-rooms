@@ -1,7 +1,6 @@
-// We use an Object here to keep track of all our messages in one easy to access place.  You can use a different method if you like.
+//messages
 const messages = {
   INTRO1: "You wake up dazed and confused. The room you are in is cold, dark, and eerily quiet. What is going on? Your gut is telling you that something is very wrong. (press y to continue)",
-  BLANKSPACE: " ",
   IFTHEYDONTTYPEY: "Well you're rude. Enjoy being trapped in a murder house.",
   INTRO2: "You stand up to look around, and realize that you are in a house you do not recognize, and you have no idea how you ended up here. You hear a muffled scream in the distance.",
   LEAVEROOM: "Let’s get the #@!*& out of here.",
@@ -47,13 +46,15 @@ const messages = {
   BASEMENTBATHIDE2: "You hide, terrified, and try to quiet your rapid breathing. But it’s no use. A bright light is suddenly turned on, and you squint to see a masked figure staring at you. You fumble to swing the baseball bat, but the killer charges towards you with a knife in hand. You are too slow, RIP",
 }
 
+//weapons inventory
 const weapons = {
   gun : false,
-  bat: false,
+  bat : false,
 }
 
+//coat
 const coat = {
-  fur: false,
+  fur : false,
 }
 
 
@@ -61,10 +62,8 @@ function beginGame() {
   // 'confirm' shows a message and waits for the user to press “OK” or “CANCEL”. It returns true for OK and false for CANCEL/Esc.
   const response = confirm(messages.INTRO1);
   if (response) {
-    // 'alert' shows a message.
-    alert(messages.BLANKSPACE);
+    // 'alert' shows a message
     alert(messages.INTRO2);
-    alert(messages.BLANKSPACE);
     nextQuestion();
   } else {
     alert(messages.IFTHEYDONTTYPEY)
@@ -75,111 +74,79 @@ function nextQuestion() {
   // 'prompt' shows a message asking the user to input text. It returns the text or, if CANCEL or Esc is clicked, null.
   const path1 = confirm(messages.LEAVEROOM);
   if (path1) {
-    alert(messages.BLANKSPACE);
     upstairsChoices();
-    
-    } 
-  else {
+  } else {
     //game over
-    alert(messages.BLANKSPACE)
     alert(messages.LEAVEROOMNO);
   } 
 } 
 
 function upstairsChoices () {
-  
   const attic = prompt(messages.LEAVEROOMYES);
-  if (attic === 'left' || attic === 'Left'){
-    alert(messages.BLANKSPACE);
-        
-    const atticActions = confirm(messages.UPSTAIRS1)
-    if (atticActions){
-      alert(messages.BLANKSPACE);
+  if (attic === 'left' || attic === 'Left') {
+    const atticActions = confirm(messages.UPSTAIRS1);
+    if (atticActions) {
       gunChoices();
-        } 
-    else {
-      alert(messages.BLANKSPACE);
-      batChoices ();
-        }
-        
-      } 
-  else if (attic === 'right' || attic === 'Right'){
-    alert(messages.BLANKSPACE);
-    const bedroom = confirm(messages.UPSTAIRS2)
-    if (bedroom){
-      alert(messages.BLANKSPACE)
+    } else {
+      batChoices();
+    }
+  }
+
+  else if (attic === 'right' || attic === 'Right') {
+    const bedroom = confirm(messages.UPSTAIRS2);
+    if (bedroom) {
       coatChoices();
-              
-            } 
+    } 
     else {
-      alert(messages.BLANKSPACE)
-      alert(messages.BEDROOMNO)
+      alert(messages.BEDROOMNO);
       weapons.bat = true;
-      alert(messages.BLANKSPACE)
-      mainFloorChoices ();
-            } 
-      }
+      mainFloorChoices();
+    } 
+  }
 }
 
-function gunChoices () {
-const gunchoice = confirm(messages.ATTIC1)
+function gunChoices() {
+  const gunchoice = confirm(messages.ATTIC1);
   if (gunchoice) {
-    alert(messages.BLANKSPACE);
     weapons.gun = true;
-    //console.log(weapons)
-    mainFloorChoices ();
+    mainFloorChoices();
   } else {
     //game over
-    alert(messages.BLANKSPACE);
     alert(messages.GUNNO);
   }
 }
 
 function batChoices() {
-const wantabat = confirm(messages.ATTIC2)
-
+  const wantabat = confirm(messages.ATTIC2);
   if (wantabat) {
-    alert(messages.BLANKSPACE);
     weapons.bat = true;
-    //console.log(weapons)
-    mainFloorChoices ();
-    
+    mainFloorChoices();
   } else {
     //game over
-    alert(messages.BLANKSPACE);
     alert(messages.BATNO);
-    alert(messages.BLANKSPACE);
     alert(messages.BATNO2);
   }
-  
 }
 
-function coatChoices () {
+function coatChoices() {
   const coatChoice = prompt(messages.BEDROOMYES);
   if (coatChoice === 'fur') {
     coat.fur = true;
-    alert(messages.BLANKSPACE);
     alert(messages.FURCOAT);
-    alert(messages.BLANKSPACE);
-    mainFloorChoices ();
-    
+    mainFloorChoices();
   } else if (coatChoice === 'leather') {
-    alert(messages.BLANKSPACE);
     alert(messages.LEATHERCOAT);
-    alert(messages.BLANKSPACE);
     weapons.gun = true;
-    mainFloorChoices ();
+    mainFloorChoices();
   }
 }
 
-function mainFloorChoices () {
+function mainFloorChoices() {
   const mainFloorChoice = prompt(messages.LEATHERCOAT2);
   if (mainFloorChoice === 'bathroom') {
-    alert(messages.BLANKSPACE);
-    bathroomChoices ();
+    bathroomChoices();
   } else if (mainFloorChoice === 'living room') {
     //game over
-    alert(messages.BLANKSPACE);
     alert(messages.LIVINGROOM);
   }
 }
@@ -187,26 +154,21 @@ function mainFloorChoices () {
 function bathroomChoices() {
   const bathroomChoice = prompt(messages.BATHROOM1);
   if (bathroomChoice === 'red') {
-    alert(messages.BLANKSPACE);
-    basementChoices ();
+    basementChoices();
   } else if (bathroomChoice === 'black') {
     //game over
-    alert(messages.BLANKSPACE);
     alert(messages.BLACKVIAL);
   }
 }
 
-function basementChoices () {
+function basementChoices() {
   const basementChoice = confirm(messages.REDVIAL);
   if (basementChoice && coat.fur === true) {
     //game over
-      alert(messages.FURCOATBASEMENT);
-  }else if (basementChoice){  
-    alert(messages.BLANKSPACE);
+    alert(messages.FURCOATBASEMENT);
+  } else if (basementChoice) {  
     runOrHideChoices();
-    alert(messages.BLANKSPACE);
-  } else if (!basementChoice){
-    alert(messages.BLANKSPACE);
+  } else if (!basementChoice) {
     alert(messages.BASEMENTNO);
   } 
 }
@@ -214,77 +176,59 @@ function basementChoices () {
 function runOrHideChoices() {
   const runOrHideChoice = prompt(messages.BASEMENTYES);
   if (runOrHideChoice === 'run') {
-    alert(messages.BLANKSPACE);
-    basementRunChoices ();
+    basementRunChoices();
   } else if (runOrHideChoice === 'hide') {
-    alert(messages.BLANKSPACE);
-    basementHideChoices ();
+    basementHideChoices();
   }
 }
 
 function basementRunChoices() {
   const basementRunChoice = confirm(messages.BASEMENTRUN);
   const basementDoorOpen = prompt(messages.BASEMENTDOOROPEN);
-  if (basementDoorOpen === 'fight' || basementDoorOpen === 'Fight'){
-    alert(messages.BLANKSPACE);
-    if (weapons.gun === true){
+  if (basementDoorOpen === 'fight' || basementDoorOpen === 'Fight') {
+    if (weapons.gun === true) {
       const runGun = prompt(messages.ATDOORGUNFIGHT);
       if (runGun === 'approach' || runGun === 'Approach') {
         //win!
-        alert(messages.BLANKSPACE);
         prompt(messages.DOUBLETAP);
         
-      } else if (runGun === 'run' || runGun === 'Run'){
+      } else if (runGun === 'run' || runGun === 'Run') {
         //win!
-        alert(messages.BLANKSPACE);
         alert(messages.KEEPRUNNING);
       }
-    } else if (weapons.bat === true){
+    } else if (weapons.bat === true) {
       //game over
-      alert(messages.BLANKSPACE);
       alert(messages.ATDOORBATFIGHT); 
-      alert(messages.BLANKSPACE);
       alert(messages.ATDOORBATFIGHT2);
-
     }
   } else if (basementDoorOpen === 'run' || basementDoorOpen === 'Run') {
     //win!
-    alert(messages.BLANKSPACE);
     alert(messages.KEEPRUNNING);
   }
-  
 }
 
 function basementHideChoices() {
-  if (weapons.gun === true){
-    alert(messages.BLANKSPACE);
+  if (weapons.gun === true) {
     const gunHide = prompt(messages.BASEMENTGUNHIDE);
-    if (gunHide === 'shoot' || gunHide === 'Shoot'){
+    if (gunHide === 'shoot' || gunHide === 'Shoot') {
       //win!
-      alert(messages.BLANKSPACE);
       alert(messages.BASEMENTGUNHIDETHENSHOOT);
       alert(messages.BASEMENTGUNNOWRUNNING);
-      
-    } else if (gunHide === 'hide' || gunHide === 'Hide'){
+    } else if (gunHide === 'hide' || gunHide === 'Hide') {
       //game over
-      alert(messages.BLANKSPACE);
       alert(messages.BASEMENTGUNHIDE2)
     }
-  } else if (weapons.bat === true){
-    alert(messages.BLANKSPACE);
+  } else if (weapons.bat === true) {
     const batHide = prompt(messages.BASEMENTBATHIDE);
-    if (batHide === 'fight' || batHide === 'Fight'){
+    if (batHide === 'fight' || batHide === 'Fight') {
       //win!
-      alert(messages.BLANKSPACE);
       alert(messages.BATFIGHTNOW);
-      alert(messages.BLANKSPACE);
       alert(messages.BATFIGHTNOW2);
-    } else if (batHide === 'hide' || batHide === 'Hide'){
+    } else if (batHide === 'hide' || batHide === 'Hide') {
       //game over
-      alert(messages.BLANKSPACE);
       alert(messages.BASEMENTBATHIDE2);
     }
   }
 }
-// don't forget to initiate your game!!
+
 beginGame();
