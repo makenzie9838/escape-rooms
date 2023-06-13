@@ -11,7 +11,7 @@
 
     <title>Haunted House Game</title>
 
-    <link href="" rel="stylesheet" />
+    <link href="styles/style.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani&display=swap" rel="stylesheet">
@@ -21,11 +21,63 @@
   </head>
 
   <body>
+    <header>
+      <h1>Haunted House Game</h1>
+    </header>
+
     <main>
+      <section>
+        <h2>Reader beware...</h2>
+        <div id="storyOutput"></div>
+      </section>
+
+      <section>
+        <h2>Player Items</h2>
+      
+        <h3>Weapons</h3>
+          <table>
+            <tr>
+              <th>Weapon</th>
+              <th>Status</th>
+            </tr>
+
+            <tr>
+              <td>Gun</td>
+              <td id="gunStatus"></td>
+            </tr>
+
+            <tr>
+              <td>Bat</td>
+              <td id="batStatus"></td>
+            </tr>
+          </table>
+
+        <h3>Coat</h3>
+          <table>
+            <tr>
+              <th>Coat</th>
+              <th>Status</th>
+            </tr>
+
+            <tr>
+              <td>Fur</td>
+              <td id="furStatus"></td>
+            </tr>
+          </table>
+      </section>
+
+      <section>
+        <h2>Decision</h2>
+        
+        <div>
+          <button id="yesButton">Yes</button>
+          <button id="noButton">No</button>
+        </div>
+      </section>
     </main>
 
     <footer>
-      <p>©Copyright 2050 by Mackenzie Eng. All rights reversed.</p>
+      <p>©Copyright by Mackenzie Eng. All rights reversed.</p>
     </footer>
 
   </body>
