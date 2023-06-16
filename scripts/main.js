@@ -1,7 +1,7 @@
 //messages
 const messages = {
   intro1: "You wake up dazed and confused. The room you are in is cold, dark, and eerily quiet. What is going on? Your gut is telling you that something is very wrong. (press yes to continue)",
-  ifTheyDontTypeY: "Well, you're rude. Enjoy being trapped in a murder house.",
+  ifTheyPressNo: "Well, you're rude. Enjoy being trapped in a murder house.",
   intro2: "You stand up to look around and realize that you are in a house you do not recognize, and you have no idea how you ended up here. You hear a muffled scream in the distance.",
   leaveRoom: "Let's get the #@!*& out of here.",
   leaveRoomYes: "You peek out of the room and see a hallway with two doors. Which one do you want to enter? (left or right)",
@@ -60,26 +60,32 @@ const coat = {
 
 const storyOutput = document.getElementById('storyOutput');
 
-const yesButton = document.querySelector("yesButton");
-const noButton = document.querySelector("noButton");
+const yesButton = document.querySelector("#yesButton");
+const noButton = document.querySelector("#noButton");
 
 function beginGame() {
-  // 'confirm' shows a message and waits for the user to press “OK” or “CANCEL”. It returns true for OK and false for CANCEL/Esc.
-  //const response = confirm(messages.INTRO1);
-  //if (response) {
-    // 'alert' shows a message
-    //alert(messages.INTRO2);
-    //nextQuestion();
-  //} else {
-    //alert(messages.IFTHEYDONTTYPEY)
-  //}
-  storyOutput.textContent = messages.intro1;
+  //gets references to messages
+  const introMessage = messages.intro1;
+  const yesMessage = messages.intro2;
+  const noMessage = messages.ifTheyPressNo;
+
+  //outputs first message
+  storyOutput.textContent = introMessage;
+
+  //if yes is pressed, we continue after another message with 10 seconds to read it
+  yesButton.addEventListener("click", function() {
+    storyOutput.textContent = yesMessage;
+    setTimeout(nextQuestion, 10000);
+  })
+
+  //if no is pressed, we end here
+  noButton.addEventListener("click", function(){
+    storyOutput.textContent = noMessage;
+  })
 }
 
-beginGame();
-
-/*
 function nextQuestion() {
+  /*
   // 'prompt' shows a message asking the user to input text. It returns the text or, if CANCEL or Esc is clicked, null.
   const path1 = confirm(messages.LEAVEROOM);
   if (path1) {
@@ -87,9 +93,14 @@ function nextQuestion() {
   } else {
     //game over
     alert(messages.LEAVEROOMNO);
-  } 
-} 
+  }
+  */
+ storyOutput.textContent = "hello world"
+}
 
+beginGame();
+
+/*
 function upstairsChoices () {
   const attic = prompt(messages.LEAVEROOMYES);
   if (attic === 'left' || attic === 'Left') {
