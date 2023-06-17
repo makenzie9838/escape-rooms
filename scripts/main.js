@@ -3,9 +3,9 @@ const messages = {
   intro1: "You wake up dazed and confused. The room you are in is cold, dark, and eerily quiet. What is going on? Your gut is telling you that something is very wrong. (press yes to continue)",
   ifTheyPressNo: "Well, you're rude. Enjoy being trapped in a murder house.",
   intro2: "You stand up to look around and realize that you are in a house you do not recognize, and you have no idea how you ended up here. You hear a muffled scream in the distance.",
-  leaveRoom: "Let's get the #@!*& out of here.",
+  leaveRoom: "Let's get the #@!*& out of here, right?",
   leaveRoomYes: "You peek out of the room and see a hallway with two doors. Which one do you want to enter? (left or right)",
-  leaveRoomNo: "You hide in place as footsteps approach. A masked figure approaches. You scream, but it’s too late. Guess you'll die here.",
+  leaveRoomNo: "You hide in place as footsteps approach. A masked figure approaches. You scream, but it’s too late. Guess you'll die here. Press yes to restart",
   upstairs1: "You open the door and see what looks like an attic. There are dusty boxes and cobwebs all around you. You catch a glimpse of a partially opened cupboard. Do you want to look inside?",
   upstairs2: "You open the door and see what looks like a bedroom. Dim light filters through the heavy curtains and reveals a filthy, bug-infested room. Do you want to stay and look through the room?",
   bedroomYes: "You notice a closet with coats hanging inside. You shiver and realize how cold you are. You go up to the closet and notice a large fur coat and a leather jacket. Which one do you put on? (fur/leather)",
@@ -85,17 +85,26 @@ function beginGame() {
 }
 
 function nextQuestion() {
-  /*
-  // 'prompt' shows a message asking the user to input text. It returns the text or, if CANCEL or Esc is clicked, null.
-  const path1 = confirm(messages.LEAVEROOM);
-  if (path1) {
+  //gets references to messages
+  const leaveRoomOrNot = messages.leaveRoom;
+  const gameOver1 = messages.leaveRoomNo;
+
+  //displays choice to leave room or not
+  storyOutput.textContent = leaveRoomOrNot;
+  
+  //if they press yes, proceed
+  yesButton.addEventListener("click", function() {
     upstairsChoices();
-  } else {
-    //game over
-    alert(messages.LEAVEROOMNO);
-  }
-  */
- storyOutput.textContent = "hello world"
+  })
+  
+  //if they press no, game over and present an option to restart by pressing yes
+  noButton.addEventListener("click", function() {
+    storyOutput.textContent = gameOver1;
+    
+    yesButton.addEventListener("click", function() {
+      beginGame();
+    })
+  })
 }
 
 beginGame();
