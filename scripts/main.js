@@ -107,32 +107,61 @@ function nextQuestion() {
   })
 }
 
+function upstairsChoices () {
+  //references to messages
+  const leftOrRight = messages.leaveRoomYes;
+  const left = messages.upstairs1;
+  const right = messages.upstairs2;
+  const bat = messages.bedroomNo;
+  
+  //asks whether the user wants to go left or right
+  storyOutput.textContent = leftOrRight;
+
+  //if they go left
+  yesButton.addEventListener("click", function() {
+    //asks if they want to look inside a cupboard
+    storyOutput.textContent = left;
+
+    //if yes, proceed to gun choices
+    yesButton.addEventListener("click", function() {
+      gunchoices();
+    })
+
+    //if no, proceed to bat choices
+    noButton.addEventListener("click", function() {
+      batchoices();
+    })
+  })
+
+  //if they go right
+  noButton.addEventListener("click", function() {
+    //asks if they want to look through the room
+    storyOutput.textContent = right;
+
+    //if yes, proceed to coat choices
+    yesButton.addEventListener("click", function() {
+      coatchoices();
+    })
+
+    //if no, they leave and take the bat
+    noButton.addEventListener("click", function() {
+      storyOutput.textContent = bat;
+
+      //sets bat to true in inventory
+      weapons.bat = true;
+
+      //how would I change the HTML to display it though?
+
+      //proceed to main floor 
+      mainFloorChoices();
+    })
+  })
+
+}
+
 beginGame();
 
 /*
-function upstairsChoices () {
-  const attic = prompt(messages.LEAVEROOMYES);
-  if (attic === 'left' || attic === 'Left') {
-    const atticActions = confirm(messages.UPSTAIRS1);
-    if (atticActions) {
-      gunChoices();
-    } else {
-      batChoices();
-    }
-  }
-
-  else if (attic === 'right' || attic === 'Right') {
-    const bedroom = confirm(messages.UPSTAIRS2);
-    if (bedroom) {
-      coatChoices();
-    } 
-    else {
-      alert(messages.BEDROOMNO);
-      weapons.bat = true;
-      mainFloorChoices();
-    } 
-  }
-}
 
 function gunChoices() {
   const gunchoice = confirm(messages.ATTIC1);
