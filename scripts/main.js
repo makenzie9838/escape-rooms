@@ -64,99 +64,152 @@ const yesButton = document.querySelector("#yesButton");
 const noButton = document.querySelector("#noButton");
 
 function beginGame() {
-  //gets references to messages
+  // Gets references to messages
   const introMessage = messages.intro1;
   const yesMessage = messages.intro2;
   const noMessage = messages.ifTheyPressNo;
 
-  //outputs first message
+  // Outputs first message
   storyOutput.textContent = introMessage;
 
-  //if yes is pressed, we continue after another message with 10 seconds to read it
-  yesButton.addEventListener("click", function() {
-    storyOutput.textContent = yesMessage;
-    setTimeout(nextQuestion, 10000);
-  })
+  // Event listener for "yes" button
+  function onYesClick() {
+    // Removes the event listener for "yes" button
+    yesButton.removeEventListener("click", onYesClick);
+    // Removes the event listener for "no" button
+    noButton.removeEventListener("click", onNoClick);
 
-  //if no is pressed, we end here
-  noButton.addEventListener("click", function(){
+    storyOutput.textContent = yesMessage;
+    setTimeout(nextQuestion, 5000);
+  }
+  yesButton.addEventListener("click", onYesClick);
+
+  // Event listener for "no" button
+  function onNoClick() {
+    // Removes the event listener for "yes" button
+    yesButton.removeEventListener("click", onYesClick);
+    // Removes the event listener for "no" button
+    noButton.removeEventListener("click", onNoClick);
+
     storyOutput.textContent = noMessage;
-  })
+  }
+  noButton.addEventListener("click", onNoClick);
 }
 
 function nextQuestion() {
-  //gets references to messages
+  // gets references to messages
   const leaveRoomOrNot = messages.leaveRoom;
   const gameOver1 = messages.leaveRoomNo;
 
-  //displays choice to leave room or not
+  // displays choice to leave room or not
   storyOutput.textContent = leaveRoomOrNot;
-  
-  //if they press yes, proceed
-  yesButton.addEventListener("click", function() {
+
+  // define the event listener functions
+  function handleYesClick() {
+    // remove event listeners
+    yesButton.removeEventListener("click", handleYesClick);
+    noButton.removeEventListener("click", handleNoClick);
+
     upstairsChoices();
-  })
-  
-  //if they press no, game over and present an option to restart by pressing yes
-  noButton.addEventListener("click", function() {
+  }
+
+  function handleNoClick() {
+    // remove event listeners
+    yesButton.removeEventListener("click", handleYesClick);
+    noButton.removeEventListener("click", handleNoClick);
+
     storyOutput.textContent = gameOver1;
-    
+
+    // add event listener to restart the game
     yesButton.addEventListener("click", function() {
       beginGame();
-    })
-  })
+    });
+  }
+
+  // add event listeners
+  yesButton.addEventListener("click", handleYesClick);
+  noButton.addEventListener("click", handleNoClick);
 }
 
-function upstairsChoices () {
-  //references to messages
+function upstairsChoices() {
+  // references to messages
   const leftOrRight = messages.leaveRoomYes;
-  const left = messages.upstairs1;
-  const right = messages.upstairs2;
-  const bat = messages.bedroomNo;
-  
-  //asks whether the user wants to go left or right
+
+  // asks whether the user wants to go left or right
   storyOutput.textContent = leftOrRight;
 
-  //if they go left
-  yesButton.addEventListener("click", function() {
-    //asks if they want to look inside a cupboard
-    storyOutput.textContent = left;
+  // remove existing event listeners
+  yesButton.removeEventListener("click", chooseLeft);
+  noButton.removeEventListener("click", chooseRight);
 
-    //if yes, proceed to gun choices
-    yesButton.addEventListener("click", function() {
-      gunchoices();
-    })
+  // add event listeners
+  yesButton.addEventListener("click", chooseLeft);
+  noButton.addEventListener("click", chooseRight);
+}
 
-    //if no, proceed to bat choices
-    noButton.addEventListener("click", function() {
-      batchoices();
-    })
-  })
+//this invokes correctly
+function chooseLeft() {
+  // remove event listeners
+  yesButton.removeEventListener("click", chooseLeft);
+  noButton.removeEventListener("click", chooseRight);
 
-  //if they go right
-  noButton.addEventListener("click", function() {
-    //asks if they want to look through the room
-    storyOutput.textContent = right;
+  // references to messages
+  const left = messages.upstairs1;
 
-    //if yes, proceed to coat choices
-    yesButton.addEventListener("click", function() {
-      coatchoices();
-    })
+  // asks if they want to look inside a cupboard
+  storyOutput.textContent = left;
 
-    //if no, they leave and take the bat
-    noButton.addEventListener("click", function() {
+  // if yes, proceed to gun choices
+  yesButton.addEventListener("click", gunchoices);
+
+  // if no, proceed to bat choices
+  noButton.addEventListener("click", batchoices);
+}
+
+//this invokes properly, goes to coatChoices propery but the no button doesn't seem to work...
+function chooseRight() {
+  // Remove event listeners
+  yesButton.removeEventListener("click", chooseLeft);
+  noButton.removeEventListener("click", chooseRight);
+
+  // References to messages
+  const right = messages.upstairs2;
+
+  // Asks if they want to look through the room
+  storyOutput.textContent = right;
+
+  // If yes, proceed to coat choices
+  yesButton.addEventListener("click", coatChoices);
+
+  // If no, they leave and take the bat
+  function handleNoClick() {
+    if (!weapons.bat) {
+      // References to messages
+      const bat = messages.bedroomNo;
+
       storyOutput.textContent = bat;
 
-      //sets bat to true in inventory
+      // Sets bat to true in inventory
       weapons.bat = true;
 
-      //how would I change the HTML to display it though?
+      // Change the HTML to display it
+      let batStatus = document.getElementById("batStatus");
+      batStatus.innerHTML = "has bat";
 
-      //proceed to main floor 
+      // Proceed to main floor
       mainFloorChoices();
-    })
-  })
+    }
 
+    // Remove event listener for the "no" button
+    noButton.removeEventListener("click", handleNoClick);
+  }
+
+  // Add event listener for the "no" button
+  noButton.addEventListener("click", handleNoClick);
+}
+
+function coatChoices() {
+  alert("hellooooooooo")
 }
 
 beginGame();
