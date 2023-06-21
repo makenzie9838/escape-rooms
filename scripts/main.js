@@ -208,24 +208,39 @@ function chooseRight() {
   noButton.addEventListener("click", handleNoClick);
 }
 
-function coatChoices() {
-  alert("hellooooooooo")
+function gunChoices() {
+  // Remove event listeners
+  yesButton.removeEventListener("click", chooseLeft);
+  noButton.removeEventListener("click", chooseRight);
+
+  //references message
+  const takePistolOrNot = messages.attic1;
+
+  //gives user the choice to take gun or not
+  storyOutput.textContent = takePistolOrNot;
+
+  function handleYesClick() {
+    if (!weapons.gun) {
+      weapons.gun = true;
+      mainFloorChoices();
+    }
+  }
+
+  function handleNoClick() {
+    const gameOver2 = messages.gunNo;
+    storyOutput.textContent = gameOver2;
+  }
+
+  //if yes, get the gun and proceed to main floor
+  yesButton.addEventListener("click", handleYesClick);
+  
+  //if no, game over #2
+  noButton.addEventListener("click", handleNoClick);
 }
 
 beginGame();
 
 /*
-
-function gunChoices() {
-  const gunchoice = confirm(messages.ATTIC1);
-  if (gunchoice) {
-    weapons.gun = true;
-    mainFloorChoices();
-  } else {
-    //game over
-    alert(messages.GUNNO);
-  }
-}
 
 function batChoices() {
   const wantabat = confirm(messages.ATTIC2);
