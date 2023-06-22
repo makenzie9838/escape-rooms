@@ -238,6 +238,20 @@ function gunChoices() {
   noButton.addEventListener("click", handleNoClick);
 }
 
+function batChoices() {
+  /*
+  const wantabat = confirm(messages.ATTIC2);
+  if (wantabat) {
+    weapons.bat = true;
+    mainFloorChoices();
+  } else {
+    //game over
+    alert(messages.BATNO);
+    alert(messages.BATNO2);
+  }
+  */
+}
+
 beginGame();
 
 /*
