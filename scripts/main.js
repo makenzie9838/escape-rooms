@@ -21,7 +21,7 @@ const messages = {
   attic2: "Okay, let’s leave. You turn to exit the room and notice a baseball bat propped up next to the door. Do you want to take it with you?",
   batYes: "Alright, let’s go. You peek down the other side of the hallway and see a staircase leading downwards. You tiptoe down and see a large living room, and what looks like a bathroom across the hallway. Which room do you want to enter? (bathroom/living room)",
   batNo: "As you glance down the other side of the hallway, you hear a rustling behind you. All of a sudden, a swarm of bats scatters throughout the attic. You shriek and slam the door shut.",
-  batNo2: "You rush down the hallway and see a staircase leading downwards. Frantically, you run down the stairs, but one of the steps collapses underneath you. You crash down and look up to see a masked figure holding a knife at the top of the stairs. You try to pull yourself up, but it is no use. You scream as the killer approaches. RIP",
+  batNo2: "You rush down the hallway and see a staircase leading downwards. Frantically, you run down the stairs, but one of the steps collapses underneath you. You crash down and look up to see a masked figure holding a knife at the top of the stairs. You try to pull yourself up, but it is no use. You scream as the killer approaches. RIP. (Press Yes to restart)",
   bathroom1: "You make your way into the small, dirty bathroom and notice a medicine cabinet. You open it and find two small vials: one black and one red. Which color do you grab? (red/black)",
   redVial: "You grab the vial and place it in your pocket. Suddenly, you hear a floorboard creak near you and footsteps that grow closer and closer. You rush out of the bathroom and notice another small set of stairs at the end of the hallway. You peer down and see what looks like a basement. Do you go down the stairs?",
   blackVial: "You grab the vial and decide to drink the liquid inside. You gasp as you feel your throat burn and begin to swell. You clutch at your neck and try to yell for help, but words won't come out. You collapse to the floor. RIP",
@@ -208,6 +208,7 @@ function chooseRight() {
   noButton.addEventListener("click", handleNoClick);
 }
 
+//haven't checked if this works yet
 function gunChoices() {
   // Remove event listeners
   yesButton.removeEventListener("click", chooseLeft);
@@ -222,6 +223,7 @@ function gunChoices() {
   function handleYesClick() {
     if (!weapons.gun) {
       weapons.gun = true;
+      //how would I actually get it to display?
       mainFloorChoices();
     }
   }
@@ -238,36 +240,55 @@ function gunChoices() {
   noButton.addEventListener("click", handleNoClick);
 }
 
+//still can't display weapons status here either
 function batChoices() {
-  /*
-  const wantabat = confirm(messages.ATTIC2);
-  if (wantabat) {
-    weapons.bat = true;
-    mainFloorChoices();
-  } else {
-    //game over
-    alert(messages.BATNO);
-    alert(messages.BATNO2);
+  //removes previous event listeners
+  yesButton.removeEventListener("click", chooseLeft);
+  noButton.removeEventListener("click", chooseRight);
+
+  //gets reference to message
+  const wantABat = messages.attic2;
+
+  //offers a bat
+  storyOutput.textContent = wantABat;
+
+  function handleYesClick() {
+    if (!weapons.bat) {
+      weapons.bat = true;
+      //how do I display it on the webpage??
+      mainFloorChoices();
+    }
   }
-  */
+
+  function handleNoClick() {
+    //removes previous event listeners
+    yesButton.removeEventListener("click", chooseLeft);
+    noButton.removeEventListener("click", chooseRight);
+
+    //gets reference to messages
+    const gameOver3 = messages.batNo;
+    const gameOver3Part2 = messages.batNo2;
+
+    //displayes part 1 of message
+    storyOutput.textContent = gameOver3;
+
+    //displays part 2 of message after 5 seconds
+    setTimeout(function() {
+      storyOutput.textContent = gameOver3Part2;
+    }, 5000)
+
+    //restarts the game if they press yes
+    yesButton.addEventListener("click", beginGame);
+  }
+
+  //assigns event listeners
+  yesButton.addEventListener("click", handleYesClick);
+  noButton.addEventListener("click", handleNoClick);
 }
 
 beginGame();
 
 /*
-
-function batChoices() {
-  const wantabat = confirm(messages.ATTIC2);
-  if (wantabat) {
-    weapons.bat = true;
-    mainFloorChoices();
-  } else {
-    //game over
-    alert(messages.BATNO);
-    alert(messages.BATNO2);
-  }
-}
-
 function coatChoices() {
   const coatChoice = prompt(messages.BEDROOMYES);
   if (coatChoice === 'fur') {
