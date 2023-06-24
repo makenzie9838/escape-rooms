@@ -8,7 +8,7 @@ const messages = {
   leaveRoomNo: "You hide in place as footsteps approach. A masked figure approaches. You scream, but it’s too late. Guess you'll die here. Press yes to restart",
   upstairs1: "You open the door and see what looks like an attic. There are dusty boxes and cobwebs all around you. You catch a glimpse of a partially opened cupboard. Do you want to look inside?",
   upstairs2: "You open the door and see what looks like a bedroom. Dim light filters through the heavy curtains and reveals a filthy, bug-infested room. Do you want to stay and look through the room?",
-  bedroomYes: "You notice a closet with coats hanging inside. You shiver and realize how cold you are. You go up to the closet and notice a large fur coat and a leather jacket. Which one do you put on? (fur/leather)",
+  bedroomYes: "You notice a closet with coats hanging inside. You shiver and realize how cold you are. You go up to the closet and notice a large fur coat and a leather jacket. Which one do you put on? (Press left for fur and right for leather)",
   bedroomNo: "Alright, let’s go. You notice a baseball bat next to the door and decide to take it with you.",
   furCoat: "You go to slip on the fluffy jacket when all of a sudden, a black widow spider crawls out and bites you. You wince in pain, throw the jacket to the ground, and leave the room.",
   furCoat2: "You peek down the other side of the hallway and see a staircase leading downwards. You tiptoe down and see a large living room, and what looks like a bathroom across the hallway. Which room do you want to enter? (bathroom/living room)",
@@ -286,22 +286,55 @@ function batChoices() {
   noButton.addEventListener("click", handleNoClick);
 }
 
+//untested
+function coatChoices() {
+  //removes previous event listeners
+  yesButton.removeEventListener("click", coatChoices);
+  noButton.removeEventListener("click", handleNoClick);
+
+  //references message
+  const furOrLeather = messages.bedroomYes;
+
+  //asks if they want to get a fur coat or leather jacket
+  storyOutput.textContent = furOrLeather;
+
+  //fur coat option
+  function handleYesClick() {
+    const spiderBite = messages.furCoat;
+    if (!coat.fur) {
+      coat.fur = true;
+
+      //how do I show you have a fur coat?
+
+      storyOutput.textContent = spiderBite;
+    }
+
+    mainFloorChoices();
+  }
+
+  //leather jacket option with pistol
+  function handleNoClick() {
+    const leatherCoatAndPistol = messages.leatherCoat;
+
+    if (!weapons.gun) {
+      weapons.gun = true;
+
+      //still don't know how to display it yet
+    }
+
+    storyOutput.textContent = leatherCoatAndPistol;
+
+    mainFloorChoices();
+  }
+
+  //assigns event listeners
+  yesButton.addEventListener("click", handleYesClick);
+  noButton.addEventListener("click", handleNoClick);
+}
+
 beginGame();
 
 /*
-function coatChoices() {
-  const coatChoice = prompt(messages.BEDROOMYES);
-  if (coatChoice === 'fur') {
-    coat.fur = true;
-    alert(messages.FURCOAT);
-    mainFloorChoices();
-  } else if (coatChoice === 'leather') {
-    alert(messages.LEATHERCOAT);
-    weapons.gun = true;
-    mainFloorChoices();
-  }
-}
-
 function mainFloorChoices() {
   const mainFloorChoice = prompt(messages.LEATHERCOAT2);
   if (mainFloorChoice === 'bathroom') {
