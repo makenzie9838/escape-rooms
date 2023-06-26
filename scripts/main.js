@@ -332,10 +332,8 @@ function coatChoices() {
   noButton.addEventListener("click", handleNoClick);
 }
 
-beginGame();
-
-/*
 function mainFloorChoices() {
+  /*
   const mainFloorChoice = prompt(messages.LEATHERCOAT2);
   if (mainFloorChoice === 'bathroom') {
     bathroomChoices();
@@ -343,8 +341,12 @@ function mainFloorChoices() {
     //game over
     alert(messages.LIVINGROOM);
   }
+  */
 }
 
+beginGame();
+
+/*
 function bathroomChoices() {
   const bathroomChoice = prompt(messages.BATHROOM1);
   if (bathroomChoice === 'red') {
